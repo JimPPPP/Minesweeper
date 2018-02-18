@@ -31,6 +31,7 @@ public class Welcome extends AppCompatActivity {
         Animation.AnimationListener animList = new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+
             }
 
             @Override
