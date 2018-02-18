@@ -4,6 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.a3.rainbow.minesweeper.MainMenu">
+    tools:context="com.a3.rainbow.minesweeper.MainMenu"
+    android:background="@drawable/spacebg">
+
+    <TextView
+        android:id="@+id/mainmenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/main_menu"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/game_btn"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/border"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/play_game"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainmenu" />
+
+    <Button
+        android:id="@+id/options_btn"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/border"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/options"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game_btn" />
+
+    <Button
+        android:id="@+id/help_btn"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/border"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/help"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/options_btn" />
 
 </android.support.constraint.ConstraintLayout>
