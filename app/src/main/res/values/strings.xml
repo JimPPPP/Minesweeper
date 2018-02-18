@@ -7,5 +7,8 @@
     <string name="options">Options</string>
     <string name="help">Help</string>
     <string name="help_text">You are a star sailor, exploring the vast star ocean with your crew. Suddenly, a nearby star exploded! Now separated by a sea of volatile stars, the only way to reunite with your crew is to avoid nearby supernovas. Luckily, you still have your trusty star scanner! Click the tiles to scan and learn more about them: Is it a star? Or will it tell you how many stars are in the rows and columns adjacent to the tile? Find all the dangerous stars in order to map a path back to your crew!</string>
-    <string name="cmptcredits">Support: <a href="https://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">Click here to get to: CMPT 276</a></string>
+    <string name="cmptcredits"><a href="https://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">Click here to get to CMPT 276.</a></string>
+    <string name="board_size_text">Board size: </string>
+    <string name="star_num_text"># of stars: </string>
+    <string name="erase_text">Erase times played</string>
 </resources>

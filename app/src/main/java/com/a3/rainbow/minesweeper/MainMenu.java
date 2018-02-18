@@ -17,9 +17,13 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        setupGameBtn();
+        setupOptionsBtn();
+        setupHelpBtn();
+    }
+
+    private void setupGameBtn() {
         Button play = findViewById(R.id.game_btn);
-        Button options = findViewById(R.id.options_btn);
-        Button help = findViewById(R.id.help_btn);
 
         play.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -28,6 +32,10 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setupOptionsBtn() {
+        Button options = findViewById(R.id.options_btn);
 
         options.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -36,6 +44,10 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setupHelpBtn() {
+        Button help = findViewById(R.id.help_btn);
 
         help.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -44,6 +56,5 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

@@ -22,22 +22,26 @@ public class Welcome extends AppCompatActivity {
 
         ImageView myStars = findViewById(R.id.stars);
         ImageView myPerson = findViewById(R.id.astronaut);
+
+        setupSkipBtn();
+        start();
+        fadeBlink(myStars);
+        rotate(myPerson);
+    }
+
+    private void setupSkipBtn() {
         Button skip = findViewById(R.id.skip_btn);
 
-        skip.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Toast toast=Toast.makeText(Welcome.this,"Skipping...",Toast.LENGTH_LONG);
+        skip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(Welcome.this, "Skipping...", Toast.LENGTH_LONG);
                 toast.show();
                 stop();
             }
         });
-
-        start();
-        fadeBlink(myStars);
-        rotate(myPerson);
     };
 
-    Runnable runner = new Runnable() {
+    private Runnable runner = new Runnable() {
         @Override
         public void run() {
             Intent intent = new Intent(Welcome.this, MainMenu.class);
@@ -45,7 +49,7 @@ public class Welcome extends AppCompatActivity {
         }
     };
 
-    Handler myHandler = new Handler();
+    private Handler myHandler = new Handler();
 
     public void start() {
         myHandler.postDelayed(runner, 5000);
