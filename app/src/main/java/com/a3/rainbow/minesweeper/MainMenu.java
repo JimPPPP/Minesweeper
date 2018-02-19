@@ -3,6 +3,7 @@ package com.a3.rainbow.minesweeper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,10 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        ImageView myStar = findViewById(R.id.star_icon);
+
+        rotate(myStar);
 
         starfield = Star.getInstance();
 
@@ -73,5 +78,10 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void rotate (final ImageView image) {
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        image.startAnimation(rotation);
     }
 }

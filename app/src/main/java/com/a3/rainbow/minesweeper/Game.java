@@ -2,15 +2,17 @@ package com.a3.rainbow.minesweeper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.a3.rainbow.minesweeper.logic.Star;
 
@@ -18,31 +20,30 @@ import java.util.Locale;
 import java.util.Random;
 
 public class Game extends AppCompatActivity {
-    private Star starfield;
     private int num_rows = 0;
     private int num_cols = 0;
     private int starNum = 0;
     private int scanNum = 0;
     private int found = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        starfield = Star.getInstance();
+        Star starfield = Star.getInstance();
         num_rows = starfield.getRowNum(getBoardSize(this));
         num_cols = starfield.getColNum(getBoardSize(this));
 
         Button buttons [][] = newButtons();
+        String[][] values = new String[num_rows][num_cols];
 
-        populateButtons(buttons);
+        populateButtons(buttons, values);
 
         starNum = starfield.getNumStars();
 
-        updateUI();
         setStars(buttons);
+        updateUI(buttons, values);
     }
 
     private void setStars(Button[][] buttons) {
@@ -53,8 +54,8 @@ public class Game extends AppCompatActivity {
             rand_row = random.nextInt(num_rows);
             rand_col = random.nextInt(num_cols);
 
-            if(buttons[rand_col][rand_row].getText() != " "){
-                setStarText(buttons, rand_col, rand_row);
+            if(buttons[rand_row][rand_col].getText() != " "){
+                buttons[rand_row][rand_col].setText(" ");
             }
             else {
                 count--;
@@ -62,20 +63,16 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    private void setStarText(Button[][] buttons, int col, int row) {
-        buttons[col][row].setText(" ");
-    }
-
     public Button [][] newButtons() {
-        return new Button[num_cols][num_rows];
+        return new Button[num_rows][num_cols];
     }
 
     public void setButton(Button[][] buttons, Button button, int cols, int rows){
-        buttons[cols][rows] = button;
+        buttons[rows][cols] = button;
     }
 
 
-    private void updateUI() {
+    private void updateUI(Button[][] buttons, String[][] values) {
         TextView stars = findViewById(R.id.star_num);
         TextView scans = findViewById(R.id.scan_num);
 
@@ -84,10 +81,24 @@ public class Game extends AppCompatActivity {
 
         String scanMsg = String.format(Locale.getDefault(), "%d scans used.", scanNum);
         scans.setText(scanMsg);
+
+        updateButtonText(buttons, values);
     }
 
+    private void updateButtonText(Button[][] buttons, String[][] values) {
+        scanner(buttons, values);
 
-    private void populateButtons(final Button[][] buttons) {
+        for (int rows = 0; rows < num_rows; rows++) {
+            for (int cols = 0; cols < num_cols; cols++) {
+                String text = buttons[rows][cols].getText().toString();
+                if (text.matches("[0-9]+")) {
+                    buttons[rows][cols].setText(values[rows][cols]);
+                }
+            }
+        }
+    }
+
+    private void populateButtons(final Button[][] buttons, final String[][] values) {
         TableLayout table  = findViewById(R.id.starfield);
 
         for (int row = 0; row < num_rows; row++) {
@@ -117,7 +128,7 @@ public class Game extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gridButtonClicked(col_final, row_final, buttons);
+                        gridButtonClicked(col_final, row_final, buttons, values);
                     }
                 });
 
@@ -126,28 +137,59 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    private void gridButtonClicked(int row, int col, Button [][] buttons) {
-        Button button = buttons[row][col];
-        if (button.getText() == " "){
+    private void scanner(Button[][] buttons, String[][] values) {
+        int curr_row = 0;
+        int curr_col = 0;
+        int[][] temp = new int[num_rows][num_cols];
+        int count = 0;
+
+        while (curr_row < num_rows) {
+            while (curr_col < num_cols) {
+                for (int col = 0; col < num_cols; col++) {
+                    if (buttons[curr_row][col].getText() == " ") {
+                        count++;
+                    }
+                }
+                for (int row = 0; row < num_rows; row++) {
+                    if (buttons[row][curr_col].getText() == " ") {
+                        count++;
+                    }
+                }
+                temp[curr_row][curr_col] = count;
+                values[curr_row][curr_col] = Integer.toString(temp[curr_row][curr_col]);
+                count = 0;
+                curr_col++;
+            }
+            curr_row++;
+            curr_col = 0;
+            count = 0;
+        }
+    }
+
+    private void gridButtonClicked(int row, int col, Button [][] buttons, String[][] values) {
+        Button button = buttons[col][row];
+        String text = button.getText().toString();
+
+        if (text == " "){
             button.setBackgroundResource(android.R.drawable.star_off);
             found++;
             button.setText("*");
         }
-        else if (button.getText() == "X")
+        else if (text.matches("[0-9]+"))
         {
-            updateUI();
+            updateButtonText(buttons, values);
         }
         else {
-            if (button.getText() != "*") {
+            if (text != "*") {
                 button.setBackgroundResource(R.drawable.btnbgclicked);
             }
-            button.setText("X");
+            CharSequence cs = values[col][row];
+            button.setText(cs);
             scanNum++;
         }
 
-        updateUI();
+        updateUI(buttons, values);
     }
-
 
     private String getBoardSize(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
