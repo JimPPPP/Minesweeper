@@ -119,7 +119,7 @@ public class Game extends AppCompatActivity {
 
                 final Button button = new Button(this);
                 button.setBackgroundResource(R.drawable.btnbg);
-                button.setTextColor(R.color.white);
+                button.setTextColor(getResources().getColor(R.color.white));
                 button.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT,
@@ -134,7 +134,6 @@ public class Game extends AppCompatActivity {
                         gridButtonClicked(col_final, row_final, buttons, values);
                     }
                 });
-
                 trow.addView(button);
             }
         }
