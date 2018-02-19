@@ -168,6 +168,7 @@ public class Game extends AppCompatActivity {
         }
     }
 
+
     private void gridButtonClicked(int row, int col, Button [][] buttons, String[][] values) {
         Button button = buttons[col][row];
         String text = button.getText().toString();
