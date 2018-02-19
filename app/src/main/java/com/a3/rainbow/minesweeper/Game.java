@@ -15,11 +15,16 @@ import android.widget.Toast;
 import com.a3.rainbow.minesweeper.logic.Star;
 
 import java.util.Locale;
+import java.util.Random;
 
 public class Game extends AppCompatActivity {
     private Star starfield;
     private int num_rows = 0;
     private int num_cols = 0;
+    private int starNum = 0;
+    private int scanNum = 0;
+    private int found = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +32,38 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         starfield = Star.getInstance();
-
-        int sizeints = Integer.parseInt(getBoardSize(this).replaceAll("[\\D]", ""));
-        String intStr = Integer.toString(sizeints);
-        String num_rows_str = Character.toString(intStr.charAt(0));
-        num_rows = Integer.parseInt(num_rows_str);
-
-        String num_cols_str = Character.toString(intStr.charAt(1));
-        if (intStr.length() != 2) {
-            num_cols_str += Character.toString(intStr.charAt(2));
-        }
-        num_cols = Integer.parseInt(num_cols_str);
+        num_rows = starfield.getRowNum(getBoardSize(this));
+        num_cols = starfield.getColNum(getBoardSize(this));
 
         Button buttons [][] = newButtons();
 
         populateButtons(buttons);
-      //  updateUI();
+
+        starNum = starfield.getNumStars();
+
+        updateUI();
+        setStars(buttons);
+    }
+
+    private void setStars(Button[][] buttons) {
+        Random random = new Random();
+        int rand_col, rand_row;
+
+        for (int count = 0; count < starNum; count++) {
+            rand_row = random.nextInt(num_rows);
+            rand_col = random.nextInt(num_cols);
+
+            if(buttons[rand_col][rand_row].getText() != " "){
+                setStarText(buttons, rand_col, rand_row);
+            }
+            else {
+                count--;
+            }
+        }
+    }
+
+    private void setStarText(Button[][] buttons, int col, int row) {
+        buttons[col][row].setText(" ");
     }
 
     public Button [][] newButtons() {
@@ -53,8 +74,7 @@ public class Game extends AppCompatActivity {
         buttons[cols][rows] = button;
     }
 
-//    private int starNum = starfield.getNumStars();
-/*
+
     private void updateUI() {
         TextView stars = findViewById(R.id.star_num);
         TextView scans = findViewById(R.id.scan_num);
@@ -65,7 +85,7 @@ public class Game extends AppCompatActivity {
         String scanMsg = String.format(Locale.getDefault(), "%d scans used.", scanNum);
         scans.setText(scanMsg);
     }
-    */
+
 
     private void populateButtons(final Button[][] buttons) {
         TableLayout table  = findViewById(R.id.starfield);
@@ -108,18 +128,29 @@ public class Game extends AppCompatActivity {
 
     private void gridButtonClicked(int row, int col, Button [][] buttons) {
         Button button = buttons[row][col];
-        button.setText("X");
-        button.setBackgroundResource(R.drawable.btnbgclicked);
+        if (button.getText() == " "){
+            button.setBackgroundResource(android.R.drawable.star_off);
+            found++;
+            button.setText("*");
+        }
+        else if (button.getText() == "X")
+        {
+            updateUI();
+        }
+        else {
+            if (button.getText() != "*") {
+                button.setBackgroundResource(R.drawable.btnbgclicked);
+            }
+            button.setText("X");
+            scanNum++;
+        }
+
+        updateUI();
     }
 
 
     private String getBoardSize(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         return prefs.getString("Board size", "");
-    }
-
-    static public int getStarNum(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        return prefs.getInt("Number of stars", 0);
     }
 }

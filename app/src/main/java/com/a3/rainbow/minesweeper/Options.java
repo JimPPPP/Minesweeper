@@ -14,9 +14,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.a3.rainbow.minesweeper.logic.Star;
+
 import java.util.Objects;
 
 public class Options extends AppCompatActivity {
+    private Star starfield;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,10 @@ public class Options extends AppCompatActivity {
         createBoardBtns();
         createSizeBtns();
 
+        starfield = Star.getInstance();
+
         int savedStarNum = getStarNum(this);
-        String savedBoardSize = getBoardSize(this);
+        starfield.setNumStars(savedStarNum);
     }
 
 
