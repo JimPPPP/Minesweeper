@@ -27,6 +27,7 @@ public class Welcome extends AppCompatActivity {
         start();
         fadeBlink(myStars);
         rotate(myPerson);
+        onBackPressed();
     }
 
     private void setupSkipBtn() {
@@ -88,6 +89,13 @@ public class Welcome extends AppCompatActivity {
         FadeIn.setAnimationListener(animList);
         FadeOut.setAnimationListener(animList);
         image.startAnimation(FadeIn);
+    }
+
+    public void onBackPressed() {
+        Intent close = new Intent(Intent.ACTION_MAIN);
+        close.addCategory(Intent.CATEGORY_HOME);
+        close.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(close);
     }
 
     private void rotate (final ImageView image) {

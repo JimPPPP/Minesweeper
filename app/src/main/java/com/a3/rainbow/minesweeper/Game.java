@@ -1,11 +1,14 @@
 package com.a3.rainbow.minesweeper;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +23,7 @@ import java.util.Locale;
 import java.util.Random;
 
 public class Game extends AppCompatActivity {
+    private Star starfield;
     private int num_rows = 0;
     private int num_cols = 0;
     private int starNum = 0;
@@ -31,7 +35,7 @@ public class Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Star starfield = Star.getInstance();
+        starfield = Star.getInstance();
         num_rows = starfield.getRowNum(getBoardSize(this));
         num_cols = starfield.getColNum(getBoardSize(this));
 
@@ -172,8 +176,11 @@ public class Game extends AppCompatActivity {
 
         if (text == " "){
             button.setBackgroundResource(android.R.drawable.star_off);
-            found++;
             button.setText("*");
+            found++;
+            if (found == starNum) {
+                congratulate();
+            }
         }
         else if (text.matches("[0-9]+"))
         {
@@ -189,6 +196,26 @@ public class Game extends AppCompatActivity {
         }
 
         updateUI(buttons, values);
+    }
+
+    private void congratulate() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle(R.string.congratulations);
+
+        alertDialogBuilder
+                .setMessage(R.string.congratulations_text)
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        Intent intent = new Intent(Game.this, MainMenu.class);
+                        startActivity(intent);
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
     }
 
     private String getBoardSize(Context context) {

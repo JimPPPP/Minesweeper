@@ -35,6 +35,14 @@ public class MainMenu extends AppCompatActivity {
         setupGameBtn();
         setupOptionsBtn();
         setupHelpBtn();
+        onBackPressed();
+    }
+
+    public void onBackPressed() {
+        Intent close = new Intent(Intent.ACTION_MAIN);
+        close.addCategory(Intent.CATEGORY_HOME);
+        close.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(close);
     }
 
     static public int getStarNum(Context context) {
