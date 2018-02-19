@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +36,7 @@ public class Game extends AppCompatActivity {
         starfield = Star.getInstance();
         num_rows = starfield.getRowNum(getBoardSize(this));
         num_cols = starfield.getColNum(getBoardSize(this));
+        starfield.setGameNum();
 
         Button buttons [][] = newButtons();
         String[][] values = new String[num_rows][num_cols];
@@ -178,6 +177,9 @@ public class Game extends AppCompatActivity {
             button.setBackgroundResource(android.R.drawable.star_off);
             button.setText("*");
             found++;
+            MediaPlayer player = MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
+            player.start();
+
             if (found == starNum) {
                 congratulate();
             }
@@ -203,8 +205,7 @@ public class Game extends AppCompatActivity {
 
         alertDialogBuilder.setTitle(R.string.congratulations);
 
-        alertDialogBuilder
-                .setMessage(R.string.congratulations_text)
+        alertDialogBuilder.setMessage(R.string.congratulations_text)
                 .setCancelable(false)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {

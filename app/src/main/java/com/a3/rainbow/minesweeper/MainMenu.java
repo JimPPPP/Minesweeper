@@ -35,7 +35,6 @@ public class MainMenu extends AppCompatActivity {
         setupGameBtn();
         setupOptionsBtn();
         setupHelpBtn();
-        onBackPressed();
     }
 
     public void onBackPressed() {

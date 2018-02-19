@@ -27,7 +27,6 @@ public class Welcome extends AppCompatActivity {
         start();
         fadeBlink(myStars);
         rotate(myPerson);
-        onBackPressed();
     }
 
     private void setupSkipBtn() {

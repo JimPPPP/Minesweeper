@@ -12,14 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.a3.rainbow.minesweeper.logic.Star;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class Options extends AppCompatActivity {
     private Star starfield;
+    private int savedGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,21 @@ public class Options extends AppCompatActivity {
         createSizeBtns();
 
         starfield = Star.getInstance();
-
+        savedGames = starfield.getGameNum();
         int savedStarNum = getStarNum(this);
         starfield.setNumStars(savedStarNum);
+
+        setGameNum();
     }
 
 
     //TODO: add erase button with functionality
+
+    private void setGameNum() {
+        TextView games = findViewById(R.id.scan_num);
+
+        games.setText(savedGames);
+    }
 
     ColorStateList colorsl = new ColorStateList(
             new int[][]{
