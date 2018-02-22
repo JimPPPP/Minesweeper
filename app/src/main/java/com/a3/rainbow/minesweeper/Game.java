@@ -36,7 +36,6 @@ public class Game extends AppCompatActivity {
         starfield = Star.getInstance();
         num_rows = starfield.getRowNum(getBoardSize(this));
         num_cols = starfield.getColNum(getBoardSize(this));
-        starfield.setGameNum();
 
         Button buttons [][] = newButtons();
         String[][] values = new String[num_rows][num_cols];
@@ -207,7 +206,7 @@ public class Game extends AppCompatActivity {
 
         alertDialogBuilder.setMessage(R.string.congratulations_text)
                 .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                .setPositiveButton("Yay!",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         Intent intent = new Intent(Game.this, MainMenu.class);
                         startActivity(intent);

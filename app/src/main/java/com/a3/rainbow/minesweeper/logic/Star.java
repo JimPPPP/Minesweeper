@@ -4,7 +4,6 @@ public class Star {
     private int numStars = 0;
     private int rowNum = 0;
     private int colNum = 0;
-    private int gameNum = 0;
 
     private static Star instance;
 
@@ -16,14 +15,6 @@ public class Star {
             instance = new Star();
         }
         return instance;
-    }
-
-    public void setGameNum () {
-        gameNum++;
-    }
-
-    public int getGameNum () {
-        return gameNum;
     }
 
     private void setRowNum(String string) {

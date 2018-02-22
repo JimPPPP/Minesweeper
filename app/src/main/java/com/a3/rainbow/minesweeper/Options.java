@@ -22,7 +22,6 @@ import java.util.Objects;
 
 public class Options extends AppCompatActivity {
     private Star starfield;
-    private int savedGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +32,10 @@ public class Options extends AppCompatActivity {
         createSizeBtns();
 
         starfield = Star.getInstance();
-        savedGames = starfield.getGameNum();
         int savedStarNum = getStarNum(this);
         starfield.setNumStars(savedStarNum);
-
-        setGameNum();
     }
 
-
-    //TODO: add erase button with functionality
-
-    private void setGameNum() {
-        TextView games = findViewById(R.id.scan_num);
-
-        games.setText(savedGames);
-    }
 
     ColorStateList colorsl = new ColorStateList(
             new int[][]{
@@ -62,27 +50,27 @@ public class Options extends AppCompatActivity {
         RadioGroup sizeGroup = findViewById(R.id.board_group);
         String[] numSize = getResources().getStringArray(R.array.board_size);
 
-            for (int i = 0; i < numSize.length; i++) {
-                final String sizeNum = numSize[i];
+        for (int i = 0; i < numSize.length; i++) {
+            final String sizeNum = numSize[i];
 
-                RadioButton button = new RadioButton(this);
-                button.setText(sizeNum + "");
-                button.setTextColor(Color.WHITE);
-                CompoundButtonCompat.setButtonTintList(button, colorsl);
+            RadioButton button = new RadioButton(this);
+            button.setText(sizeNum + "");
+            button.setTextColor(Color.WHITE);
+            CompoundButtonCompat.setButtonTintList(button, colorsl);
 
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        saveSize(sizeNum);
-                    }
-                });
-
-                sizeGroup.addView(button);
-
-                if (Objects.equals(sizeNum, getBoardSize(this))) {
-                    button.setChecked(true);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveSize(sizeNum);
                 }
+            });
+
+            sizeGroup.addView(button);
+
+            if (Objects.equals(sizeNum, getBoardSize(this))) {
+                button.setChecked(true);
             }
+        }
     }
 
     private void createSizeBtns() {
