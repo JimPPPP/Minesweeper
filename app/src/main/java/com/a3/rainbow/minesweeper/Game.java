@@ -20,6 +20,7 @@ import com.a3.rainbow.minesweeper.logic.Star;
 import java.util.Locale;
 import java.util.Random;
 
+
 public class Game extends AppCompatActivity {
     private Star starfield;
     private int num_rows = 0;
